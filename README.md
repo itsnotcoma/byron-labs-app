@@ -1,8 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Byron Labs Frontend
+
+This is a simple Cybersecurity Incident Reporting Web app, code test for [Byron Labs](https://github.com/ByronLabs).
+
+The task is to create a simple web app that allows users to report cybersecurity incidents, integrating with a [FastAPI backend](https://github.com/itsnotcoma/byron-labs-api). The app should have the following features:
+
+- A form to report an incident.
+- A list of reported incidents.
+- A way to view the details of an incident.
+- A way to delete an incident.
+- A way to edit an incident.
+- All data should be protected by authentication.
 
 ## Getting Started
 
-First, run the development server:
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+First, install the dependencies:
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+# or
+bun install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -34,3 +59,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+---
+Node: v20.11.1
