@@ -7,7 +7,7 @@ const LogoutButton = () => {
         await signOut();
     };
     return (
-        <button className="flex" type="button" onClick={handleSignOut}>
+        <button className="flex" type="button" onClick={handleSignOut} title="Sign out">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M17.4399 14.62L19.9999 12.06L17.4399 9.5"

@@ -7,6 +7,7 @@ export const env = createEnv({
      * isn't built with invalid env vars.
      */
     server: {
+        AUTH_SECRET: z.string(),
         AUTH_EXPIRATION: z.number().int().positive().optional(),
     },
 
@@ -25,6 +26,7 @@ export const env = createEnv({
      */
     runtimeEnv: {
         // Server
+        AUTH_SECRET: process.env.AUTH_SECRET,
         AUTH_EXPIRATION: process.env.AUTH_EXPIRATION,
         // Client
         NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,

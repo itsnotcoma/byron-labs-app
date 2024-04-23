@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
@@ -44,13 +46,13 @@ async function getUser(credentials: { username: string; password: string }) {
         });
 
         if (!res.ok) {
-            console.error("Failed to fetch user data.", res.statusText);
-            throw new Error("Failed to fetch user data.");
+            const data = await res.json();
+            console.error("Failed to fetch user data.", res.statusText, data.detail);
+            throw new Error(data.detail);
         }
         const data = await res.json();
         return data;
     } catch (error) {
         console.error("Failed to fetch user data.", error);
-        throw new Error("Failed to fetch user data.");
     }
 }

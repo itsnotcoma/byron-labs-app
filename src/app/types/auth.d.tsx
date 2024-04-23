@@ -6,9 +6,17 @@ export type User = {
     company: string;
 };
 
-export interface AuthUser extends User {
-    access_token: string;
-}
+export type AuthError = {
+    error: {
+        status: string;
+        message: string;
+    };
+};
+
+export type AuthUser = User & {
+    expires: Date & string;
+    error?: AuthError;
+};
 
 export type LoginDTO = {
     username: string;

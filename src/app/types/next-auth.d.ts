@@ -1,13 +1,7 @@
 import { DefaultSession } from "next-auth";
+import { AuthUser } from "./auth.d";
 
-export type ExtendedUser = DefaultSession["user"] & {
-    id: string;
-    username: string;
-    name: string;
-    email: string;
-    company: string;
-    access_token: string;
-};
+export type ExtendedUser = DefaultSession["user"] & AuthUser;
 
 declare module "next-auth" {
     interface Session {
