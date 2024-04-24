@@ -68,11 +68,19 @@ const UserMenu = () => {
                 }
             >
                 <div className="flex flex-col">
-                    <div className="flex flex-col p-2">
-                        <span className="font-semibold">{user?.username}</span>
-                        <span className="text-xs">{user?.email}</span>
-                        <span className="text-xs">{user?.company}</span>
-                    </div>
+                    {user ? (
+                        <div className="flex flex-col p-2">
+                            <span className="font-semibold">{user.username}</span>
+                            <span className="text-xs">{user.email}</span>
+                            <span className="text-xs">{user.company}</span>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col gap-1 p-2">
+                            <span className="h-4 w-full animate-pulse bg-gray-300"></span>
+                            <span className="h-4 w-full animate-pulse bg-gray-300"></span>
+                            <span className="h-4 w-full animate-pulse bg-gray-300"></span>
+                        </div>
+                    )}
                     <div className="flex cursor-pointer overflow-hidden rounded-b-lg p-2 hover:bg-black/5">
                         <SignOutButton />
                     </div>
