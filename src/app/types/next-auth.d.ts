@@ -1,5 +1,5 @@
 import { DefaultSession } from "next-auth";
-import { AuthUser } from "./auth.d";
+import { AuthUser } from "./auth";
 
 export type ExtendedUser = DefaultSession["user"] & AuthUser;
 

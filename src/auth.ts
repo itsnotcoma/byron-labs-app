@@ -34,14 +34,13 @@ export const {
                 company: token.company,
                 access_token: token.access_token,
             } as any;
-
             const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/auth/me`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Credentials": "true",
-                    Authorization: `Bearer ${(session.user as any).access_token}`,
+                    Authorization: `Bearer ${session.user.access_token}`,
                 },
             });
 

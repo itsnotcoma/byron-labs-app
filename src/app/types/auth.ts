@@ -15,6 +15,7 @@ export type AuthError = {
 
 export type AuthUser = User & {
     expires: Date & string;
+    access_token: string;
     error?: AuthError;
 };
 
