@@ -1,16 +1,14 @@
-"use client";
+import { type Metadata } from "next";
 
-import SignOutButton from "@/components/sign-in/sign-out-button";
-import { useCurrentUser } from "@/hooks/use-current-user";
+export const metadata: Metadata = {
+    title: "Dashboard",
+    description: "Dashboard page",
+};
 
 const DashboardPage = () => {
-    const user = useCurrentUser();
-
     return (
-        <main>
-            <h1>Dashboard</h1>
-            <SignOutButton />
-            <p className="break-words">Hi, {user?.name}</p>
+        <main className="p-5">
+            <h1 className="font-clash-display text-4xl">Dashboard</h1>
         </main>
     );
 };

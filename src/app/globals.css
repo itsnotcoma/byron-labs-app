@@ -8,6 +8,7 @@
   --primary-rgb: 8, 8, 8;
   --secondary-rgb: 233, 233, 233;
   --accent-rgb: 255, 255, 255;
+  --accent-dark-rgb: 221, 221, 221;
 }
 
 ::-webkit-scrollbar {

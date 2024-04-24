@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import DashboardHeader from "@/components/dashboard/dashboard-header";
 import { SessionProvider } from "next-auth/react";
 import SessionHandler from "./session-handler";
 
@@ -11,6 +12,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
     return (
         <SessionProvider session={session} refetchOnWindowFocus={true}>
             <SessionHandler session={session}>
+                <DashboardHeader />
                 <main>{children}</main>
             </SessionHandler>
         </SessionProvider>
