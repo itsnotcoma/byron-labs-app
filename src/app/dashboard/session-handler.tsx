@@ -2,6 +2,7 @@
 
 import { type Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 interface SessionHandlerProps {
@@ -10,16 +11,19 @@ interface SessionHandlerProps {
 }
 
 const SessionHandler = ({ session, children }: SessionHandlerProps) => {
+    const router = useRouter();
     const error = session?.user?.error;
 
     useEffect(() => {
         const handleSignOut = async () => {
             if (error) {
-                await signOut();
+                await signOut({ redirect: false });
+                router.push("/");
             }
         };
-        void handleSignOut();
-    }, [error]);
+        const timeout = setTimeout(() => handleSignOut(), 500);
+        return () => clearTimeout(timeout);
+    }, [error, router]);
 
     return <>{children}</>;
 };
