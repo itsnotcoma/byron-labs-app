@@ -1,3 +1,4 @@
+import { type User } from "./auth";
 import { type PaginationQuery } from "./pagination";
 
 export enum IncidentSeverity {
@@ -18,8 +19,9 @@ export interface IncidentDTO {
     title: string;
     description: string;
     severity: IncidentSeverity;
-    reporter: string;
+    reporter: User;
     status: IncidentStatus;
+    date: string;
     created_at: string;
     updated_at: string;
 }

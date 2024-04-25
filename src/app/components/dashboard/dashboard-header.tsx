@@ -3,9 +3,11 @@ import UserMenu from "./user-menu";
 
 const DashboardHeader = () => {
     return (
-        <header className="flex w-full items-center justify-between gap-6 bg-accent px-5 py-2">
+        <header className="sticky top-0 flex w-full items-center justify-between gap-6 bg-accent px-5 py-4">
             <div className="flex items-center gap-6">
-                <span className="font-clash-display text-xl font-semibold">CyberHQ</span>
+                <Link href={"/dashboard"} className="font-clash-display text-xl font-semibold">
+                    CyberHQ
+                </Link>
             </div>
             <div className="flex items-center gap-6 sm:flex-1">
                 <span className="italic sm:flex-1">Search</span>

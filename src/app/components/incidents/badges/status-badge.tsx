@@ -7,7 +7,7 @@ interface IncidentStatusBadgeProps {
 export default function IncidentStatusBadge({ status }: IncidentStatusBadgeProps) {
     if (status === IncidentStatus.IN_PROGRESS) {
         return (
-            <div className="flex w-fit items-center gap-2 rounded bg-[#89632a] px-2 text-sm text-white">
+            <div className="flex w-fit items-center gap-2 rounded bg-[#e8c600] px-2 text-sm text-white">
                 <span className="h-2 w-2 shrink-0 rounded-full bg-[#ca8e1b]"></span>
                 <span>In Progress</span>
             </div>
@@ -33,7 +33,7 @@ export default function IncidentStatusBadge({ status }: IncidentStatusBadgeProps
     }
 
     return (
-        <div className="flex w-fit items-center gap-2 rounded bg-[#5a5a5a] px-2 text-sm text-white">
+        <div className="flex w-fit items-center gap-2 rounded bg-black/30 px-2 text-sm text-white">
             <span className="h-2 w-2 shrink-0 rounded-full bg-[#9b9b9b]"></span>
             <span>Not Started</span>
         </div>
