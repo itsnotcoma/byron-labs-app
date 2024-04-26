@@ -7,10 +7,12 @@ import { type AuthUser } from "@/types/auth";
 import { type IncidentDTO } from "@/types/incident";
 import api from "@/utils/api";
 import { formatRelative } from "date-fns";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import SeverityBadge from "../badges/severity-badge";
 import StatusBadge from "../badges/status-badge";
+import EditIncident from "./edit-incident";
 
 type Props = {
     params: { id: string };
@@ -19,12 +21,25 @@ type Props = {
 const IncidentPageDisplay = ({ params }: Props) => {
     const { id } = params;
     const auth = useCurrentUser();
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
     const [incident, setIncident] = useState<IncidentDTO | null>(null);
     const [hiddenProperties, setHiddenProperties] = useState<boolean>(true);
+    const [isEditing, setEditing] = useState<boolean>(false);
 
     const handleHiddenProperties = () => {
         setHiddenProperties(!hiddenProperties);
+    };
+
+    const handleOnCloseEdit = () => {
+        setEditing(false);
+        router.replace(`/dashboard/incidents/${id}`, { scroll: false });
+    };
+
+    const handleOnClickEdit = (event: MouseEvent) => {
+        event.preventDefault();
+        setEditing(true);
     };
 
     useEffect(() => {
@@ -40,91 +55,101 @@ const IncidentPageDisplay = ({ params }: Props) => {
         fetchIncidents();
     }, [id, auth]);
 
+    useEffect(() => {
+        setEditing(searchParams.get("edit") === "true");
+    }, [searchParams]);
+
     if (!incident) {
         return skeleton();
     }
 
     return (
-        <main className="flex flex-col divide-y divide-black/10 p-5">
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-                <h1 className="break-words font-clash-display text-4xl">{incident.title}</h1>
-                <div className="hidden flex-wrap items-center gap-4 sm:flex">
-                    <EditButton auth={auth} incidentId={id} />
+        <>
+            <main className="flex flex-col divide-y divide-black/10 p-5">
+                <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+                    <h1 className="break-words font-clash-display text-4xl">{incident.title}</h1>
+                    <div className="hidden flex-wrap items-center gap-4 sm:flex">
+                        <EditButton auth={auth} incidentId={id} onClick={handleOnClickEdit} />
+                        <DeleteButton auth={auth} incidentId={id} />
+                    </div>
+                </div>
+                <section className="flex flex-col gap-3 py-4">
+                    <div className="flex items-center gap-4">
+                        <span className="w-24 px-2 py-1.5 text-black/60">Severity</span>
+                        <span className="px-2 py-1.5">
+                            <SeverityBadge severity={incident.severity} />
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <span className="w-24 px-2 py-1.5 text-black/60">Status</span>
+                        <span className="px-2 py-1.5">
+                            <StatusBadge status={incident.status} />
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <span className="w-24 px-2 py-1.5 text-black/60">Date</span>
+                        <span className="px-2 py-1.5 font-medium">
+                            {formatRelative(new Date(incident.date), new Date())}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <span className="w-24 px-2 py-1.5 text-black/60">Company</span>
+                        <span className="px-2 py-1.5 font-medium">{incident.reporter.company}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <span className="w-24 px-2 py-1.5 text-black/60">Reporter</span>
+                        <span className="px-2 py-1.5 font-medium">{incident.reporter.name}</span>
+                    </div>
+                    <div className={`${hiddenProperties ? "hidden" : "flex"} items-center gap-4`}>
+                        <span className="w-24 px-2 py-1.5 text-black/60">Created</span>
+                        <span className="px-2 py-1.5 font-medium">
+                            {formatRelative(new Date(incident.date), new Date())}
+                        </span>
+                    </div>
+                    <div className={`${hiddenProperties ? "hidden" : "flex"} items-center gap-4`}>
+                        <span className="w-24 px-2 py-1.5 text-black/60">Updated</span>
+                        <span className="px-2 py-1.5 font-medium">
+                            {formatRelative(new Date(incident.date), new Date())}
+                        </span>
+                    </div>
+                    <button
+                        type="button"
+                        className="flex w-fit items-center justify-center gap-2 rounded px-2 py-1.5 text-black/60 transition-colors duration-300 hover:bg-black/10"
+                        onClick={handleHiddenProperties}
+                    >
+                        <svg
+                            className={hiddenProperties ? undefined : "rotate-180"}
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M19.9201 8.94995L13.4001 15.47C12.6301 16.24 11.3701 16.24 10.6001 15.47L4.08008 8.94995"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeMiterlimit="10"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                        <span>{hiddenProperties ? "Hide 2 properties" : "2 more properties"}</span>
+                    </button>
+                </section>
+                <div className="py-4">
+                    <p
+                        className="px-2 py-1.5"
+                        dangerouslySetInnerHTML={{ __html: incident.description.replace(/(?:\r\n|\r|\n)/g, "<br />") }}
+                    ></p>
+                </div>
+                <div className="flex flex-wrap items-center gap-4 py-4 sm:hidden">
+                    <EditButton auth={auth} incidentId={id} onClick={handleOnClickEdit} />
                     <DeleteButton auth={auth} incidentId={id} />
                 </div>
-            </div>
-            <section className="flex flex-col gap-3 py-4">
-                <div className="flex items-center gap-4">
-                    <span className="w-24 px-2 py-1.5 text-black/60">Severity</span>
-                    <span className="px-2 py-1.5">
-                        <SeverityBadge severity={incident.severity} />
-                    </span>
-                </div>
-                <div className="flex items-center gap-4">
-                    <span className="w-24 px-2 py-1.5 text-black/60">Status</span>
-                    <span className="px-2 py-1.5">
-                        <StatusBadge status={incident.status} />
-                    </span>
-                </div>
-                <div className="flex items-center gap-4">
-                    <span className="w-24 px-2 py-1.5 text-black/60">Date</span>
-                    <span className="px-2 py-1.5 font-medium">
-                        {formatRelative(new Date(incident.date), new Date())}
-                    </span>
-                </div>
-                <div className="flex items-center gap-4">
-                    <span className="w-24 px-2 py-1.5 text-black/60">Company</span>
-                    <span className="px-2 py-1.5 font-medium">{incident.reporter.company}</span>
-                </div>
-                <div className="flex items-center gap-4">
-                    <span className="w-24 px-2 py-1.5 text-black/60">Reporter</span>
-                    <span className="px-2 py-1.5 font-medium">{incident.reporter.name}</span>
-                </div>
-                <div className={`${hiddenProperties ? "hidden" : "flex"} items-center gap-4`}>
-                    <span className="w-24 px-2 py-1.5 text-black/60">Created</span>
-                    <span className="px-2 py-1.5 font-medium">
-                        {formatRelative(new Date(incident.date), new Date())}
-                    </span>
-                </div>
-                <div className={`${hiddenProperties ? "hidden" : "flex"} items-center gap-4`}>
-                    <span className="w-24 px-2 py-1.5 text-black/60">Updated</span>
-                    <span className="px-2 py-1.5 font-medium">
-                        {formatRelative(new Date(incident.date), new Date())}
-                    </span>
-                </div>
-                <button
-                    type="button"
-                    className="flex w-fit items-center justify-center gap-2 rounded px-2 py-1.5 text-black/60 transition-colors duration-300 hover:bg-black/10"
-                    onClick={handleHiddenProperties}
-                >
-                    <svg
-                        className={hiddenProperties ? undefined : "rotate-180"}
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M19.9201 8.94995L13.4001 15.47C12.6301 16.24 11.3701 16.24 10.6001 15.47L4.08008 8.94995"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeMiterlimit="10"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg>
-                    <span>{hiddenProperties ? "Hide 2 properties" : "2 more properties"}</span>
-                </button>
-            </section>
-            <div className="py-4">
-                <p className="px-2 py-1.5">{incident.description}</p>
-            </div>
-            <div className="flex flex-wrap items-center gap-4 py-4 sm:hidden">
-                <EditButton auth={auth} incidentId={id} />
-                <DeleteButton auth={auth} incidentId={id} />
-            </div>
-        </main>
+            </main>
+            {isEditing && <EditIncident auth={auth} incident={incident} onClose={handleOnCloseEdit} />}
+        </>
     );
 };
 
@@ -135,11 +160,17 @@ type ActionButtonProps = {
     incidentId: string;
 };
 
-const EditButton = ({ auth, incidentId }: ActionButtonProps) => {
+const EditButton = ({ auth, incidentId, onClick }: { onClick: (event: MouseEvent) => void } & ActionButtonProps) => {
+    const handleOnClick = () => {
+        onClick(new MouseEvent("click"));
+    };
+
     return (
-        <button
-            type="button"
+        <Link
+            href={`/dashboard/incidents/${incidentId}?edit=true`}
+            passHref
             className="flex shrink-0 items-center justify-center gap-2 border border-black/75 bg-primary px-4 py-1.5 text-sm text-accent transition-colors duration-300 hover:bg-black/80"
+            onClick={handleOnClick}
         >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -168,7 +199,7 @@ const EditButton = ({ auth, incidentId }: ActionButtonProps) => {
                 />
             </svg>
             <span>Edit</span>
-        </button>
+        </Link>
     );
 };
 

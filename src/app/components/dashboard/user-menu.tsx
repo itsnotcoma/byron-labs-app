@@ -55,7 +55,7 @@ const UserMenu = () => {
                 </svg>
             </button>
             <button
-                className="hover:bg-accent-dark hidden cursor-pointer items-center gap-3 rounded bg-secondary px-2 shadow shadow-black/50 transition-colors duration-200 sm:flex"
+                className="hidden cursor-pointer items-center gap-3 rounded bg-secondary px-2 shadow shadow-black/50 transition-colors duration-200 hover:bg-accent-dark sm:flex"
                 onClick={handleMenuToggle}
             >
                 <span className="font-medium">Hi, {user?.name}</span>
@@ -64,7 +64,7 @@ const UserMenu = () => {
                 className={
                     !isMenuOpen
                         ? "hidden"
-                        : "absolute right-0 top-[calc(100%_+_0.25rem)] min-w-[12rem] rounded-lg border bg-accent shadow"
+                        : "shadow-dropdown absolute right-0 top-[calc(100%_+_0.25rem)] min-w-[12rem] rounded-lg border bg-accent"
                 }
             >
                 <div className="flex flex-col">

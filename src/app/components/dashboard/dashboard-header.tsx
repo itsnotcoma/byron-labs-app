@@ -9,8 +9,7 @@ const DashboardHeader = () => {
                     CyberHQ
                 </Link>
             </div>
-            <div className="flex items-center gap-6 sm:flex-1">
-                <span className="italic sm:flex-1">Search</span>
+            <div className="flex items-center gap-6">
                 <nav className="hidden items-center gap-3 sm:flex">
                     <Link href={"/dashboard/incidents"} className="border-black font-semibold hover:border-b">
                         Incidents

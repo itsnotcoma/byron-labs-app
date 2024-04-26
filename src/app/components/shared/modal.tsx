@@ -36,13 +36,17 @@ const Modal = ({ children, onClose, title }: ModalProps) => {
     }, [modalRef, onClose]);
 
     return createPortal(
-        <div className="cdk-overlay-modal fixed left-0 top-0 z-10 flex h-svh w-svw items-center justify-center bg-[#171717]/50">
+        <div className="cdk-overlay-modal fixed left-0 top-0 z-50 flex h-svh w-svw items-center justify-center bg-[#171717]/50">
             <dialog
                 ref={modalRef}
                 className="border-border bg-muted mx-auto flex max-h-[90vh] w-[calc(100%_-_1.25rem)] max-w-[580px] flex-col items-center justify-center rounded-lg p-5 "
             >
                 <header className="relative flex w-full flex-1 pt-5">
-                    {title && <h2 className="mb-6 break-words text-center font-clash-display text-2xl">{title}</h2>}
+                    {title && (
+                        <h2 className="mx-auto mb-6 flex break-words text-center font-clash-display text-2xl">
+                            {title}
+                        </h2>
+                    )}
                     <button
                         type="button"
                         className="absolute -right-2 -top-2 flex transition-colors hover:text-black/60"
@@ -73,7 +77,7 @@ const Modal = ({ children, onClose, title }: ModalProps) => {
                         </svg>
                     </button>
                 </header>
-                <main className="overflow-y-auto">{children}</main>
+                <main className="w-full overflow-y-auto">{children}</main>
             </dialog>
         </div>,
         document.body
