@@ -1,10 +1,10 @@
 import { IncidentStatus } from "@/types/incident";
 
-interface IncidentStatusBadgeProps {
+interface Props {
     status: IncidentStatus;
 }
 
-export default function IncidentStatusBadge({ status }: IncidentStatusBadgeProps) {
+export default function StatusBadge({ status }: Props) {
     if (status === IncidentStatus.IN_PROGRESS) {
         return (
             <div className="flex w-fit items-center gap-2 rounded bg-[#e8c600] px-2 text-sm text-white">

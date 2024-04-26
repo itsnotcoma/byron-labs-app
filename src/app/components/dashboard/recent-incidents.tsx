@@ -15,7 +15,7 @@ const RecentIncidents = () => {
         const fetchIncidents = async () => {
             const res = await api<IncidentRes>("incident/all?limit=4", {
                 headers: {
-                    Authorization: `Bearer ${user.access_token}`,
+                    Authorization: `Bearer ${user?.access_token}`,
                 },
             });
             setIncidents(res.data);

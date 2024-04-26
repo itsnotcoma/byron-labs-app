@@ -40,7 +40,7 @@ export const {
                     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Credentials": "true",
-                    Authorization: `Bearer ${session.user.access_token}`,
+                    Authorization: `Bearer ${session.user?.access_token}`,
                 },
             });
 

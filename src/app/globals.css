@@ -33,12 +33,12 @@ body {
   font-family: "Archivo";
 }
 
+body:has(.cdk-overlay-modal) {
+  overflow: hidden;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-
-  .h-screen {
-    height: 100svh;
   }
 }

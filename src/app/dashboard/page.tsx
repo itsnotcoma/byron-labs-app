@@ -15,7 +15,7 @@ const DashboardPage = () => {
                 <h2 className=" font-clash-display text-xl">Latest Incidents</h2>
                 <Link
                     href={"/dashboard/incidents"}
-                    className="border border-black bg-accent px-2 transition-colors duration-300 hover:bg-primary hover:text-secondary"
+                    className="border border-black/75 bg-primary px-2 text-accent transition-colors duration-300 hover:bg-black/80"
                 >
                     See All
                 </Link>

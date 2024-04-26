@@ -16,7 +16,7 @@ const IncidentsSection = () => {
         const fetchIncidents = async () => {
             const res = await api<IncidentRes>("incident/all", {
                 headers: {
-                    Authorization: `Bearer ${user.access_token}`,
+                    Authorization: `Bearer ${user?.access_token}`,
                 },
             });
             setIncidents(res.data);
@@ -24,7 +24,7 @@ const IncidentsSection = () => {
         };
 
         fetchIncidents();
-    }, [user.access_token]);
+    }, [user]);
 
     return (
         <section className="flex flex-col gap-6">
