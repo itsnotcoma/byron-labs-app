@@ -7,11 +7,13 @@ export async function authenticate(prevState: string | undefined, formData: Form
     try {
         await signIn("credentials", formData);
     } catch (error) {
+        console.error("Failed to sign in.", error);
         if (error instanceof AuthError) {
             if (error.type === "CredentialsSignin") {
+                console.error("Invalid credentials.", error);
                 return "Invalid credentials.";
             }
-            return "An error occurred.";
+            return error.cause?.err?.message ?? "An error occurred while signing in.";
         }
         throw error;
     }

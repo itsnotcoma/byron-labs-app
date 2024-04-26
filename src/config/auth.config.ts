@@ -47,12 +47,13 @@ async function getUser(credentials: { username: string; password: string }) {
 
         if (!res.ok) {
             const data = await res.json();
-            console.error("Failed to fetch user data.", res.statusText, data.detail);
+            console.error(res.statusText, data.detail);
             throw new Error(data.detail);
         }
         const data = await res.json();
         return data;
     } catch (error) {
         console.error("Failed to fetch user data.", error);
+        throw error;
     }
 }
