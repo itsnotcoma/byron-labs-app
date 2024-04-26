@@ -8,7 +8,7 @@ import { type IncidentDTO } from "@/types/incident";
 import api from "@/utils/api";
 import { formatRelative } from "date-fns";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import SeverityBadge from "../badges/severity-badge";
 import StatusBadge from "../badges/status-badge";
@@ -160,7 +160,7 @@ type ActionButtonProps = {
     incidentId: string;
 };
 
-const EditButton = ({ auth, incidentId, onClick }: { onClick: (event: MouseEvent) => void } & ActionButtonProps) => {
+const EditButton = ({ incidentId, onClick }: { onClick: (event: MouseEvent) => void } & ActionButtonProps) => {
     const handleOnClick = () => {
         onClick(new MouseEvent("click"));
     };
@@ -205,7 +205,6 @@ const EditButton = ({ auth, incidentId, onClick }: { onClick: (event: MouseEvent
 
 const DeleteButton = ({ auth, incidentId }: ActionButtonProps) => {
     const [isOpen, setOpenModal] = useState(false);
-    const router = useRouter();
 
     const handleDelete = async () => {
         try {
@@ -215,7 +214,7 @@ const DeleteButton = ({ auth, incidentId }: ActionButtonProps) => {
                     Authorization: `Bearer ${auth.access_token}`,
                 },
             });
-            router.push("/dashboard/incidents");
+            redirect("/dashboard/incidents");
         } catch (error) {
             console.error("Failed to delete incident.", error);
         } finally {
