@@ -1,19 +1,18 @@
-# Byron Labs Frontend
+# Incident Management Web App
 
 This is a simple Cybersecurity Incident Reporting Web app, code test for [Byron Labs](https://github.com/ByronLabs).
 
-The task is to create a simple web app that allows users to report cybersecurity incidents, integrating with a [FastAPI backend](https://github.com/itsnotcoma/byron-labs-api). The app should have the following features:
+The task is to create a simple web app that allows users to report cybersecurity incidents, integrating with a [FastAPI backend](https://github.com/itsnotcoma/byron-labs-api).
 
-- A form to report an incident.
-- A list of reported incidents.
-- A way to view the details of an incident.
-- A way to delete an incident.
-- A way to edit an incident.
-- All data should be protected by authentication.
+## Overview
 
-## Getting Started
+This project is Next.js web app that allows users to report cybersecurity incidents. It provides a seamless user experience with a FastAPI API and a authentication system.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Installation
+
+
+> The app uses a simple API. You should see first how to set up the [FastAPI backend](https://github.com/itsnotcoma/byron-labs-api/blob/main/README.md) to ensure the app works correctly.
+
 
 First, install the dependencies:
 
@@ -41,9 +40,14 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The app uses a `.env` file to configure some basic settings. You can copy the `.env.example` file to `.env` and modify the values as needed.
+
+```env
+AUTH_SECRET=secret same as the FastAPI backend
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
 
 ## Learn More
 
